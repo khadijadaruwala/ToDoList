@@ -20,3 +20,8 @@ struct ToDoItem: Identifiable{
     }
 }
 
+
+class ToTodoItemStore: ObservableObject {
+    
+   @Published var toDoItems = [ToDoItem]()
+}
