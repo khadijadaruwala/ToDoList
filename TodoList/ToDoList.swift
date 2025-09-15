@@ -20,7 +20,11 @@ struct ToDoList: View {
                     } else{
                         Text(todo.title)
                     }
-                }
+                }.onDelete(perform: { indexSet in
+                    if let index = indexSet.first {
+                        self.toDoStore.toDoItems.remove(at: index)
+                    }
+                })
             }.navigationTitle("To Dos").navigationBarItems(trailing: NavigationLink(destination: CreateToDo()){
                 Text("Add")
             })

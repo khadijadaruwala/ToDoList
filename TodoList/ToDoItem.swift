@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToDoItem: Identifiable{
+struct ToDoItem: Identifiable, Codable{
     
     var id: UUID = UUID()
     var title: String
@@ -20,8 +20,19 @@ struct ToDoItem: Identifiable{
     }
 }
 
-
 class TodoItemStore: ObservableObject {
     
-   @Published var toDoItems = [ToDoItem]()
+    @Published var toDoItems = [ToDoItem]() {
+        didSet{
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(toDoItems), forKey: "toDoItems")
+        }
+    }
+    
+    init(){
+        if let data = UserDefaults.standard.value(forKey: "toDoItems") as? Data {
+            if let userDefaultsTodoItems = try? PropertyListDecoder().decode(Array<ToDoItem>.self, from: data){
+                toDoItems = userDefaultsTodoItems
+            }
+        }
+    }
 }
