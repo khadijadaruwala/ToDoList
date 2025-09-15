@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct CreateToDo: View {
+    @State var toDoTitle = ""
+    @State var important = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List{
+            Section{
+                TextField("Ex. Walk the dog", text: $toDoTitle)
+            }
+            Section{
+                Toggle("Important", isOn: $important)
+            }
+        }.listStyle(GroupedListStyle())
+        
     }
 }
 
